@@ -1,0 +1,44 @@
+vector <int>    bestSeq         = currentSeq;           // ベストの状態
+    double          bestScore       = getScore(currentSeq); // ベストスコア。getScoreは、状態からスコアを求める関数
+    double          currentScore    = bestScore;            // 現在のスコア
+    {
+        const ll saTimeStart    = getTime();            // 焼きなまし開始時刻。getTimeは、時間を返す関数
+        const ll saTimeEnd      = m_startTime+msec;     // 焼きなまし終了時刻。m_startTimeはこのプログラム自体の開始時間
+        ll saTimeCurrent        = saTimeStart;          // 現在の時刻
+
+        while ((saTimeCurrent = getTime()) < saTimeEnd) // 焼きなまし終了時刻までループ
+        {
+            vector <int> nextSeq(currentSeq);       // 次の状態
+            nextSeq[rand()%MAXMIR] = rand()%(L-1);  // 次の状態を求める。ランダムで1要素選んで、変えてみる。
+
+            const double nextScore = getScore(nextSeq);
+
+            // 最初t=0のときは、スコアが良くなろうが悪くなろうが、常にnextを使用
+            // 最後t=Tのときは、スコアが改善したときのみ、nextを使用
+            const ll T = saTimeEnd-saTimeStart;         // 焼きなましにかける時間
+            const ll t = saTimeCurrent-saTimeStart;     // 焼きなまし法開始からの時間
+            const ll R = 10000;
+            // スコアが悪くなったときでも、次の状態に移動する遷移する場合はtrue。１次関数を使用。
+            const bool FORCE_NEXT = R*(T-t)>T*(rand()%R);
+
+            // スコアが良くなった or 悪くなっても強制遷移
+            if (nextScore>currentScore || (FORCE_NEXT && currentScore>0.0f) )
+            {
+                currentScore = nextScore;
+                currentSeq = nextSeq;
+                printf("current Score=%.8f time=%lld\n",currentScore,t);
+            }
+
+            // ベストスコアは保存しておく。
+            if(currentScore>bestScore)
+            {
+                bestScore = currentScore;
+                printf("New best Score=%.8f time=%lld\n",bestScore,t);
+                bestSeq = currentSeq;
+            }
+        }
+    }
+
+    // ベストスコアをしたときの状態を返す。
+    return bestSeq;
+}
