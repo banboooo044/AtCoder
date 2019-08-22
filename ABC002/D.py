@@ -1,6 +1,3 @@
-#! usr/bin/env python3
-# -*- coding:utf-8 -*-
-
 # D:派閥
 
 N,M = map(int,input().split(" "))
