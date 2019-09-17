@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "algorithm": "cpp",
+        "iostream": "cpp",
+        "queue": "cpp",
+        "stack": "cpp",
+        "iosfwd": "cpp",
+        "deque": "cpp",
+        "optional": "cpp",
+        "list": "cpp",
+        "vector": "cpp",
+        "*.tcc": "cpp",
+        "utility": "cpp"
+    }
+}
